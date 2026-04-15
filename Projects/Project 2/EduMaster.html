@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMaster - Online Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --red: #e74c3c;
+            --red-dark: #c0392b;
+            --dark: #0f0f0f;
+            --dark2: #1a1a1a;
+            --dark3: #242424;
+            --gray: #888;
+            --light: #f0f0f0;
+            --white: #ffffff;
+            --accent: #f39c12;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            background: rgba(15,15,15,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled { background: rgba(10,10,10,0.97); }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 68px;
+        }
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px; font-weight: 800;
+            color: var(--white); text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .nav-logo span { color: var(--red); }
+        .nav-menu {
+            display: flex; align-items: center; gap: 8px;
+            list-style: none;
+        }
+        .nav-link {
+            color: #bbb; text-decoration: none;
+            font-size: 15px; font-weight: 500;
+            padding: 8px 14px; border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+        .btn {
+            padding: 10px 22px; border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 500;
+            cursor: pointer; border: none; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--red); color: #fff; }
+        .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+        .btn-secondary {
+            background: transparent; color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+        .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; display: block; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(231,76,60,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(231,76,60,0.12); border: 1px solid rgba(231,76,60,0.3);
+            color: var(--red); padding: 6px 16px; border-radius: 100px;
+            font-size: 13px; font-weight: 500; margin-bottom: 28px;
+            animation: fadeUp 0.6s ease both;
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(38px, 6vw, 76px);
+            font-weight: 800; line-height: 1.1;
+            letter-spacing: -2px; margin-bottom: 24px;
+            animation: fadeUp 0.7s 0.1s ease both;
+        }
+        .hero h1 span { color: var(--red); }
+        .hero p {
+            font-size: 18px; color: #999; max-width: 580px;
+            margin: 0 auto 40px; line-height: 1.7;
+            animation: fadeUp 0.7s 0.2s ease both;
+        }
+        .hero-btns {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+            animation: fadeUp 0.7s 0.3s ease both;
+        }
+        .hero-btns .btn { padding: 14px 32px; font-size: 15px; border-radius: 10px; }
+        .hero-stats {
+            display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+            margin-top: 72px; padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            animation: fadeUp 0.7s 0.4s ease both;
+        }
+        .hero-stat-item { text-align: center; }
+        .hero-stat-item .num {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px; font-weight: 800; color: var(--white);
+        }
+        .hero-stat-item .num span { color: var(--red); }
+        .hero-stat-item p { color: var(--gray); font-size: 14px; margin-top: 4px; }
+
+        /* ── SECTIONS ── */
+        .section { padding: 96px 24px; max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            display: inline-block;
+            color: var(--red); font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+            letter-spacing: -1px; margin-bottom: 16px; color: var(--white);
+        }
+        .section-sub { color: var(--gray); font-size: 16px; max-width: 500px; line-height: 1.7; margin-bottom: 56px; }
+
+        /* ── SEARCH & FILTER ── */
+        .search-bar {
+            display: flex; gap: 12px; flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        .search-input-wrap {
+            flex: 1; min-width: 240px;
+            position: relative;
+        }
+        .search-input-wrap i {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            color: var(--gray); font-size: 15px;
+        }
+        .search-input {
+            width: 100%; padding: 14px 16px 14px 44px;
+            background: var(--dark3); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; color: var(--white); font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .search-input:focus { border-color: var(--red); }
+        .search-input::placeholder { color: var(--gray); }
+        .filter-tabs {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px;
+        }
+        .filter-tab {
+            padding: 8px 20px; border-radius: 100px;
+            background: var(--dark3); border: 1px solid rgba(255,255,255,0.08);
+            color: #999; font-size: 14px; cursor: pointer;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+        }
+        .filter-tab:hover, .filter-tab.active {
+            background: var(--red); color: #fff; border-color: var(--red);
+        }
+
+        /* ── COURSE CARDS ── */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .course-card {
+            background: var(--dark2); border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.07);
+            overflow: hidden; transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .course-card:hover { transform: translateY(-6px); border-color: rgba(231,76,60,0.3); }
+        .course-card[data-hidden="true"] { display: none; }
+        .course-img {
+            width: 100%; height: 180px; object-fit: cover;
+            background: linear-gradient(135deg, var(--dark3), var(--dark2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; color: var(--red);
+        }
+        .course-img-placeholder {
+            width: 100%; height: 180px;
+            background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px;
+        }
+        .course-body { padding: 22px; }
+        .course-tag {
+            display: inline-block; padding: 4px 12px; border-radius: 100px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .tag-web { background: rgba(52,152,219,0.15); color: #3498db; }
+        .tag-data { background: rgba(46,204,113,0.15); color: #2ecc71; }
+        .tag-design { background: rgba(155,89,182,0.15); color: #9b59b6; }
+        .tag-marketing { background: rgba(243,156,18,0.15); color: #f39c12; }
+        .tag-mobile { background: rgba(231,76,60,0.15); color: #e74c3c; }
+        .course-body h3 {
+            font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700;
+            margin-bottom: 8px; color: var(--white);
+        }
+        .course-body p { color: var(--gray); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+        .course-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+        .course-meta span { color: #777; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .course-meta i { color: var(--accent); }
+        .stars { color: var(--accent); font-size: 12px; }
+        .course-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .price { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--white); }
+        .price-old { font-size: 13px; color: #555; text-decoration: line-through; margin-left: 6px; }
+
+        /* ── FEATURES ── */
+        .features-section { background: var(--dark2); padding: 96px 24px; }
+        .features-inner { max-width: 1200px; margin: 0 auto; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--dark3); border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 28px; transition: all 0.3s;
+        }
+        .feature-card:hover { border-color: rgba(231,76,60,0.25); transform: translateY(-4px); }
+        .feature-icon {
+            width: 52px; height: 52px; border-radius: 12px;
+            background: rgba(231,76,60,0.12);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: var(--red); margin-bottom: 20px;
+        }
+        .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+        .feature-card p { color: var(--gray); font-size: 14px; line-height: 1.7; }
+
+        /* ── STATS ── */
+        .stats-section { padding: 96px 24px; background: var(--dark); }
+        .stats-inner { max-width: 1200px; margin: 0 auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; }
+        .stat-card {
+            background: var(--dark2); padding: 40px 32px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+        }
+        .stat-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 3px; background: var(--red);
+            transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left;
+        }
+        .stat-card:hover::after { transform: scaleX(1); }
+        .stat-num {
+            font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800;
+            color: var(--white); line-height: 1;
+        }
+        .stat-num span { color: var(--red); }
+        .stat-label { color: var(--gray); font-size: 14px; margin-top: 8px; }
+
+        /* ── TESTIMONIALS ── */
+        .testimonials-section { background: var(--dark2); padding: 96px 24px; }
+        .testimonials-inner { max-width: 1200px; margin: 0 auto; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .testimonial-card {
+            background: var(--dark3); border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 28px; transition: all 0.3s;
+        }
+        .testimonial-card:hover { border-color: rgba(231,76,60,0.2); }
+        .testimonial-stars { color: var(--accent); font-size: 14px; margin-bottom: 16px; }
+        .testimonial-text { color: #bbb; font-size: 15px; line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 14px; }
+        .avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: #fff;
+        }
+        .testimonial-author-info h4 { font-size: 15px; font-weight: 600; }
+        .testimonial-author-info p { color: var(--gray); font-size: 13px; }
+
+        /* ── FAQ ── */
+        .faq-section { padding: 96px 24px; }
+        .faq-inner { max-width: 760px; margin: 0 auto; }
+        .faq-item {
+            background: var(--dark2); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s;
+        }
+        .faq-item.open { border-color: rgba(231,76,60,0.3); }
+        .faq-question {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 24px; cursor: pointer; user-select: none;
+        }
+        .faq-question h4 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; }
+        .faq-icon {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(255,255,255,0.07);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray); font-size: 14px; transition: all 0.3s; flex-shrink: 0;
+        }
+        .faq-item.open .faq-icon { background: var(--red); color: #fff; transform: rotate(45deg); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 24px; color: var(--gray); font-size: 15px; line-height: 1.7;
+        }
+        .faq-answer.open { max-height: 200px; padding: 0 24px 20px; }
+
+        /* ── CTA ── */
+        .cta-section {
+            margin: 0 24px 96px; border-radius: 20px;
+            background: linear-gradient(135deg, var(--red-dark) 0%, #9b2335 100%);
+            padding: 80px 40px; text-align: center; position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute; top: -50%; right: -10%;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); pointer-events: none;
+        }
+        .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; }
+        .cta-section p { color: rgba(255,255,255,0.75); font-size: 17px; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-section .btn { padding: 16px 40px; font-size: 16px; background: #fff; color: var(--red); font-weight: 600; border-radius: 12px; }
+        .cta-section .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+
+        /* ── CONTACT ── */
+        .contact-section { padding: 0 24px 96px; }
+        .contact-inner { max-width: 680px; margin: 0 auto; }
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 14px; font-weight: 500; color: #ccc; }
+        .form-control {
+            padding: 14px 16px; border-radius: 10px;
+            background: var(--dark2); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--white); font-size: 15px; font-family: 'DM Sans', sans-serif;
+            outline: none; transition: border-color 0.2s; resize: vertical;
+        }
+        .form-control:focus { border-color: var(--red); }
+        .form-control.error { border-color: #e74c3c; }
+        .form-control.success { border-color: #2ecc71; }
+        .field-error { color: #e74c3c; font-size: 13px; display: none; }
+        .field-error.show { display: block; }
+        .form-success {
+            display: none; background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.3);
+            color: #2ecc71; padding: 16px 20px; border-radius: 10px; text-align: center;
+            font-size: 15px; margin-top: 8px;
+        }
+        .form-success.show { display: block; }
+        .submit-btn { padding: 16px; font-size: 16px; border-radius: 10px; margin-top: 4px; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #080808; border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 64px 24px 32px;
+        }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px; margin-bottom: 56px;
+        }
+        .footer-brand p { color: var(--gray); font-size: 14px; line-height: 1.7; margin: 16px 0 24px; max-width: 280px; }
+        .footer-socials { display: flex; gap: 10px; }
+        .social-btn {
+            width: 38px; height: 38px; border-radius: 9px;
+            background: var(--dark3); border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            color: #888; font-size: 15px; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .social-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
+        .footer-col h4 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li a { color: var(--gray); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--white); }
+        .footer-bottom {
+            padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+            color: #555; font-size: 13px;
+        }
+        .footer-bottom a { color: var(--red); text-decoration: none; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: #0f0f0f; border-top: 1px solid rgba(255,255,255,0.07); padding: 20px; gap: 4px; }
+            .nav-menu.open { display: flex; }
+            .hamburger { display: flex; }
+            .hero-stats { gap: 28px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo">Edu<span>Master</span></a>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#features" class="nav-link">Features</a></li>
+            <li><a href="#courses" class="nav-link">Courses</a></li>
+            <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+            <li><a href="#faq" class="nav-link">FAQ</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><button class="btn btn-secondary">Sign In</button></li>
+            <li><button class="btn btn-primary">Sign Up</button></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+    <div>
+        <div class="hero-badge"><i class="fas fa-bolt"></i> #1 Online Learning Platform in 2024</div>
+        <h1>Transform Your Future<br>With <span>Online Learning</span></h1>
+        <p>Access high-quality courses from industry experts and gain the skills you need to succeed in today's competitive world.</p>
+        <div class="hero-btns">
+            <button class="btn btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Explore Courses</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Learn More &nbsp;→</button>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat-item">
+                <div class="num" data-target="50000">0<span>+</span></div>
+                <p>Active Students</p>
+            </div>
+            <div class="hero-stat-item">
+                <div class="num" data-target="200">0<span>+</span></div>
+                <p>Expert Courses</p>
+            </div>
+            <div class="hero-stat-item">
+                <div class="num" data-target="98">0<span>%</span></div>
+                <p>Satisfaction Rate</p>
+            </div>
+            <div class="hero-stat-item">
+                <div class="num" data-target="150">0<span>+</span></div>
+                <p>Instructors</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="features-inner">
+        <span class="section-label">Why EduMaster</span>
+        <h2 class="section-title">Everything you need to learn</h2>
+        <p class="section-sub">A platform built for real outcomes — not just certificates.</p>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-laptop"></i></div>
+                <h3>Learn Anywhere</h3>
+                <p>Access your courses on any device, anytime. Fully optimized for desktop, tablet, and mobile.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>Expert Instructors</h3>
+                <p>Learn from industry professionals with years of real-world experience in their fields.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                <h3>Lifetime Access</h3>
+                <p>Enroll once, access forever. All future updates to courses are included at no extra cost.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                <h3>Certificates</h3>
+                <p>Earn industry-recognized certificates to add to your LinkedIn and impress employers.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <h3>Community</h3>
+                <p>Join a thriving community of learners. Ask questions, share projects, and grow together.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Our dedicated support team is here around the clock to help you whenever you need it.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+    <div class="stats-inner">
+        <div class="stats-grid">
+            <div class="stat-card reveal">
+                <div class="stat-num" data-target="50000">0<span>+</span></div>
+                <div class="stat-label">Students Enrolled</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-num" data-target="200">0<span>+</span></div>
+                <div class="stat-label">Courses Available</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-num" data-target="150">0<span>+</span></div>
+                <div class="stat-label">Expert Instructors</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-num" data-target="98">0<span>%</span></div>
+                <div class="stat-label">Satisfaction Rate</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- COURSES -->
+<div class="section" id="courses">
+    <span class="section-label">Courses</span>
+    <h2 class="section-title">Popular Courses</h2>
+    <p class="section-sub">Hand-picked by experts. Search and filter to find your perfect course.</p>
+
+    <div class="search-bar">
+        <div class="search-input-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" class="search-input" id="courseSearch" placeholder="Search courses...">
+        </div>
+    </div>
+
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="web">Web Dev</button>
+        <button class="filter-tab" data-filter="data">Data Science</button>
+        <button class="filter-tab" data-filter="design">Design</button>
+        <button class="filter-tab" data-filter="marketing">Marketing</button>
+        <button class="filter-tab" data-filter="mobile">Mobile</button>
+    </div>
+
+    <div class="courses-grid" id="coursesGrid">
+        <div class="course-card" data-category="web" data-title="complete web development">
+            <div class="course-img-placeholder">🌐</div>
+            <div class="course-body">
+                <span class="course-tag tag-web">Web Dev</span>
+                <h3>Complete Web Development</h3>
+                <p>Master HTML, CSS, JavaScript and modern frameworks in this comprehensive bootcamp.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.9</span>
+                    <span><i class="fas fa-users"></i> 12,400 students</span>
+                    <span><i class="fas fa-clock"></i> 42h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$99</span><span class="price-old">$199</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+        <div class="course-card" data-category="data" data-title="data science fundamentals">
+            <div class="course-img-placeholder">📊</div>
+            <div class="course-body">
+                <span class="course-tag tag-data">Data Science</span>
+                <h3>Data Science Fundamentals</h3>
+                <p>Learn Python, statistics, machine learning and data visualization from scratch.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.8</span>
+                    <span><i class="fas fa-users"></i> 9,800 students</span>
+                    <span><i class="fas fa-clock"></i> 56h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$129</span><span class="price-old">$249</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+        <div class="course-card" data-category="marketing" data-title="digital marketing mastery">
+            <div class="course-img-placeholder">📣</div>
+            <div class="course-body">
+                <span class="course-tag tag-marketing">Marketing</span>
+                <h3>Digital Marketing Mastery</h3>
+                <p>Learn SEO, social media marketing, content strategy and advanced analytics.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.7</span>
+                    <span><i class="fas fa-users"></i> 7,200 students</span>
+                    <span><i class="fas fa-clock"></i> 28h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$79</span><span class="price-old">$159</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+        <div class="course-card" data-category="design" data-title="ui ux design complete guide">
+            <div class="course-img-placeholder">🎨</div>
+            <div class="course-body">
+                <span class="course-tag tag-design">Design</span>
+                <h3>UI/UX Design Complete Guide</h3>
+                <p>Design stunning interfaces with Figma, understand user psychology, and build your portfolio.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.9</span>
+                    <span><i class="fas fa-users"></i> 5,600 students</span>
+                    <span><i class="fas fa-clock"></i> 38h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$109</span><span class="price-old">$219</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+        <div class="course-card" data-category="mobile" data-title="flutter mobile app development">
+            <div class="course-img-placeholder">📱</div>
+            <div class="course-body">
+                <span class="course-tag tag-mobile">Mobile</span>
+                <h3>Flutter App Development</h3>
+                <p>Build beautiful cross-platform mobile apps for iOS and Android using Flutter & Dart.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.8</span>
+                    <span><i class="fas fa-users"></i> 4,300 students</span>
+                    <span><i class="fas fa-clock"></i> 44h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$119</span><span class="price-old">$229</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+        <div class="course-card" data-category="data" data-title="machine learning with python">
+            <div class="course-img-placeholder">🤖</div>
+            <div class="course-body">
+                <span class="course-tag tag-data">Data Science</span>
+                <h3>Machine Learning with Python</h3>
+                <p>Build real ML models using scikit-learn, TensorFlow, and deploy them in production.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-star"></i> 4.9</span>
+                    <span><i class="fas fa-users"></i> 8,100 students</span>
+                    <span><i class="fas fa-clock"></i> 62h</span>
+                </div>
+                <div class="course-footer">
+                    <div><span class="price">$149</span><span class="price-old">$299</span></div>
+                    <button class="btn btn-primary">Enroll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p id="noResults" style="display:none; text-align:center; color:#666; padding:40px; font-size:16px;">😕 No courses found. Try a different search term.</p>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-section" id="testimonials">
+    <div class="testimonials-inner">
+        <span class="section-label">Testimonials</span>
+        <h2 class="section-title">What our students say</h2>
+        <p class="section-sub" style="margin-bottom:48px;">Real results from real learners who transformed their careers.</p>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"EduMaster completely changed my career path. I landed a front-end developer job within 3 months of finishing the Web Dev course. The quality of content is unmatched."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background: linear-gradient(135deg,#e74c3c,#c0392b);">A</div>
+                    <div class="testimonial-author-info">
+                        <h4>Ahmed Khan</h4>
+                        <p>Frontend Developer @ TechCorp</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"The Data Science course was incredibly well-structured. I went from zero Python knowledge to building ML models. Worth every penny and more."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background: linear-gradient(135deg,#2ecc71,#27ae60);">S</div>
+                    <div class="testimonial-author-info">
+                        <h4>Sara Malik</h4>
+                        <p>Data Analyst @ FinTech Co.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"I took the UI/UX course and it completely changed how I think about design. Got my first freelance client just 6 weeks in. The community is incredibly supportive."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background: linear-gradient(135deg,#9b59b6,#8e44ad);">Z</div>
+                    <div class="testimonial-author-info">
+                        <h4>Zara Ahmed</h4>
+                        <p>Freelance UI/UX Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section" id="faq">
+    <div class="faq-inner">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title" style="text-align:center;">Frequently Asked Questions</h2>
+        <p class="section-sub" style="text-align:center; margin:0 auto 48px;">Everything you need to know before getting started.</p>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h4>Do I get lifetime access after purchasing a course?</h4>
+                <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="faq-answer">Yes! Once you purchase a course, you have lifetime access including all future updates. Learn at your own pace without any time pressure.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <h4>Are the certificates recognized by employers?</h4>
+                <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="faq-answer">Our certificates are recognized by hundreds of top companies worldwide. You can share them directly on LinkedIn or include them in your resume.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <h4>Can I get a refund if I'm not satisfied?</h4>
+                <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="faq-answer">Absolutely. We offer a 30-day money-back guarantee on all courses. If you're not happy for any reason, just reach out and we'll process your refund within 2-3 business days.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <h4>Do I need any prior experience to start?</h4>
+                <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="faq-answer">Most of our courses are beginner-friendly and start from the very basics. Each course page clearly states the prerequisites so you always know what to expect before enrolling.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <h4>How do I access the courses after purchasing?</h4>
+                <div class="faq-icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="faq-answer">After purchasing, courses are instantly available in your student dashboard. You can access them on any device — desktop, tablet, or mobile — at any time.</div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Ready to Start Learning?</h2>
+    <p>Join over 50,000 students who have already transformed their careers with EduMaster.</p>
+    <button class="btn" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Get Started Today</button>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+    <div class="contact-inner">
+        <span class="section-label">Contact</span>
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-sub">Have a question? We'd love to hear from you. Send us a message and we'll respond within 24 hours.</p>
+
+        <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Muhammad Sami">
+                <span class="field-error" id="nameError">Please enter your name.</span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="you@example.com">
+                <span class="field-error" id="emailError">Please enter a valid email.</span>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" class="form-control" placeholder="Course Inquiry">
+                <span class="field-error" id="subjectError">Please enter a subject.</span>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" class="form-control" rows="5" placeholder="Write your message here..."></textarea>
+                <span class="field-error" id="messageError">Message must be at least 20 characters.</span>
+            </div>
+            <button type="submit" class="btn btn-primary submit-btn">Send Message &nbsp;<i class="fas fa-paper-plane"></i></button>
+            <div class="form-success" id="formSuccess">✅ Message sent successfully! We'll get back to you within 24 hours.</div>
+        </form>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">Edu<span style="color:var(--red)">Master</span></a>
+                <p>Empowering learners worldwide with high-quality, accessible online education since 2020.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Courses</h4>
+                <ul>
+                    <li><a href="#">All Courses</a></li>
+                    <li><a href="#">New Releases</a></li>
+                    <li><a href="#">Popular</a></li>
+                    <li><a href="#">Free Courses</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 EduMaster. All rights reserved.</span>
+            <span>Made with ❤️ by <a href="#">Muhammad Sami Abid</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ── NAVBAR scroll + hamburger
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navMenu.classList.toggle('open');
+    });
+    navMenu.querySelectorAll('.nav-link').forEach(l => {
+        l.addEventListener('click', () => {
+            navMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+        });
+    });
+
+    // ── COUNTER animation
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.querySelector('span').textContent;
+        let current = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+            current = Math.min(current + step, target);
+            el.innerHTML = (target >= 1000 ? (current/1000).toFixed(0)+'K' : current) + `<span>${suffix}</span>`;
+            if (current >= target) clearInterval(timer);
+        }, 25);
+    }
+
+    // ── SCROLL REVEAL + counter trigger
+    const reveals = document.querySelectorAll('.reveal');
+    const counters = document.querySelectorAll('.stat-num, .hero .num');
+    const counted = new Set();
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting && !counted.has(e.target)) {
+                counted.add(e.target);
+                animateCounter(e.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => counterObserver.observe(el));
+
+    // ── COURSE SEARCH
+    const searchInput = document.getElementById('courseSearch');
+    const cards = document.querySelectorAll('.course-card');
+    const noResults = document.getElementById('noResults');
+
+    function filterCourses() {
+        const query = searchInput.value.toLowerCase().trim();
+        const activeFilter = document.querySelector('.filter-tab.active').dataset.filter;
+        let visible = 0;
+
+        cards.forEach(card => {
+            const titleMatch = card.dataset.title.includes(query);
+            const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
+            const show = titleMatch && categoryMatch;
+            card.style.display = show ? 'block' : 'none';
+            if (show) visible++;
+        });
+
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', filterCourses);
+
+    // ── FILTER TABS
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            filterCourses();
+        });
+    });
+
+    // ── FAQ ACCORDION
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const item = q.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.faq-answer').classList.remove('open');
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.classList.add('open');
+            }
+        });
+    });
+
+    // ── CONTACT FORM VALIDATION
+    const form = document.getElementById('contactForm');
+
+    function validate(id, errorId, condition) {
+        const field = document.getElementById(id);
+        const error = document.getElementById(errorId);
+        if (condition(field.value.trim())) {
+            field.classList.remove('error'); field.classList.add('success');
+            error.classList.remove('show'); return true;
+        } else {
+            field.classList.add('error'); field.classList.remove('success');
+            error.classList.add('show'); return false;
+        }
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const v1 = validate('name', 'nameError', v => v.length >= 2);
+        const v2 = validate('email', 'emailError', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+        const v3 = validate('subject', 'subjectError', v => v.length >= 3);
+        const v4 = validate('message', 'messageError', v => v.length >= 20);
+
+        if (v1 && v2 && v3 && v4) {
+            const btn = form.querySelector('.submit-btn');
+            btn.textContent = 'Sending...'; btn.disabled = true;
+            setTimeout(() => {
+                document.getElementById('formSuccess').classList.add('show');
+                form.reset();
+                form.querySelectorAll('.form-control').forEach(f => f.classList.remove('success'));
+                btn.innerHTML = 'Send Message &nbsp;<i class="fas fa-paper-plane"></i>';
+                btn.disabled = false;
+            }, 1200);
+        }
+    });
+
+    // Live validation on blur
+    ['name','email','subject','message'].forEach(id => {
+        document.getElementById(id).addEventListener('blur', () => {
+            if (id === 'name') validate('name','nameError', v => v.length >= 2);
+            if (id === 'email') validate('email','emailError', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+            if (id === 'subject') validate('subject','subjectError', v => v.length >= 3);
+            if (id === 'message') validate('message','messageError', v => v.length >= 20);
+        });
+    });
+</script>
+</body>
+</html>
