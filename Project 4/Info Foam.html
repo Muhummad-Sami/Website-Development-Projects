@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0%;
+            margin: 0%;
+        }
+        .main{
+            background-image: linear-gradient( to right, rgb(34, 34, 206),rgb(12, 206, 206));
+            width: 100%;
+            display: flex;
+            justify-content: center;
+  }
+        form{
+            background-color: rgb(239, 236, 231);
+            width: 50%;
+            justify-content: center;
+            padding: 30px;
+            margin-top: 5px;
+            font-size: 20px;
+            border: 2px black solid;
+
+        }
+        .inpt{
+            width: 95%;
+            padding: 15px;
+            font-size: 15px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        label{
+            font-size: larger;
+        }
+        select{
+            width: 100%;
+            padding: 15px;
+            font-size: 17px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+
+        }
+        button{
+            width: 100%;
+            padding: 10px;
+            font-size: 25px;
+            margin-top: 8px;
+            font-weight: bold;
+            background-image: linear-gradient( to right, rgb(34, 34, 206),rgb(12, 206, 206));
+            border-radius: 20px;
+            color: aliceblue;
+        }
+        textarea{
+            width: 100%;
+            height: 70px;
+            font-size: 18px;
+        
+
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <form action="submit">
+            <label for="name">Name</label><br>
+            <input type="text"  class="inpt" placeholder="Enter Your Name"  required >
+            <label for="name">Email</label><br>
+            <input type="email" class="inpt" placeholder="Enter Your Email" required >
+            <label for="name">Age</label><br>
+            <input type="number" class="inpt" placeholder="Enter Your Age" required >
+            <label for="name">Which Option Best Describe You</label><br>
+             <select name="Student" id="Student" required>
+                <option value="Student">Student</option>
+                <option value="Student">Bussinass Man</option>
+                <option value="Student">Web Developer</option>
+                <option value="Student">Teacher</option>
+             </select>
+
+             Would You Recommend GeeksforGeeks To A Friend? <br><br> 
+             <input type="radio" name="recommend" id="yes"  required>
+             <label for="yes">Yes</label> <br>
+             <input type="radio" name="recommend" id="no" required> 
+             <label for="no">No</label> <br>
+             <input type="radio" name="recommend" id="maybe" required>
+             <label for="maybe">Maybe</label> <br><br>
+             
+
+            Language And Framework Known (Check All That Apply): <br><br>
+            <input type="checkbox" name="language" value="python"> Python <br>
+            <input type="checkbox" name="language" value="java"> Java <br>
+            <input type="checkbox" name="language" value="csharp"> C# <br>
+            <input type="checkbox" name="language" value="javascript"> JavaScript <br>
+            <input type="checkbox" name="language" value="ruby"> Ruby <br>
+            <input type="checkbox" name="language" value="php"> PHP <br>
+            <input type="checkbox" name="language" value="cplus"> C++ <br>
+            <input type="checkbox" name="language" value="swift"> Swift <br>
+            <input type="checkbox" name="language" value="typescript"> TypeScript <br>
+            <input type="checkbox" name="language" value="go"> Go <br><br>
+
+            Any Comment Or Suggestions <br><br>
+            <textarea name="" id=""></textarea><br><br>
+
+            <button>Submit</button>
+
+        </form>
+    </div>
+    
+</body>
+</html>

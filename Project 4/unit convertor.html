@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f0f1a;
+            --surface: #16162a;
+            --card: #1e1e38;
+            --card2: #252545;
+            --border: rgba(255,255,255,0.07);
+            --accent: #7c3aed;
+            --accent2: #06b6d4;
+            --accent-glow: rgba(124,58,237,0.35);
+            --accent2-glow: rgba(6,182,212,0.25);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --dim: #64748b;
+            --success: #10b981;
+            --white: #fff;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 16px 48px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── BACKGROUND BLOBS ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -160px;
+            left: -160px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -120px;
+            right: -120px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(6,182,212,0.14) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HERO HEADER ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 36px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(124,58,237,0.15);
+            border: 1px solid rgba(124,58,237,0.3);
+            color: #a78bfa;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        .header-badge svg { width: 13px; height: 13px; stroke: #a78bfa; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        h1 {
+            font-size: clamp(28px, 5vw, 46px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 30%, #a78bfa 70%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .header-sub { color: var(--muted); font-size: 15px; }
+
+        /* ── CATEGORY TABS ── */
+        .category-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .cat-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .cat-btn:hover { border-color: rgba(124,58,237,0.4); color: #c4b5fd; background: rgba(124,58,237,0.1); }
+        .cat-btn.active { background: linear-gradient(135deg, var(--accent), #6d28d9); border-color: transparent; color: #fff; box-shadow: 0 4px 20px var(--accent-glow); }
+
+        /* ── MAIN CARD ── */
+        .converter-card {
+            width: 100%;
+            max-width: 560px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+        }
+        .converter-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* ── INPUT ROW ── */
+        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+        .input-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+        .input-row { display: flex; gap: 10px; align-items: stretch; }
+
+        .unit-select {
+            flex: 0 0 160px;
+            padding: 14px 16px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        .unit-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+        .unit-select option { background: #1e1e38; }
+
+        .num-input {
+            flex: 1;
+            padding: 14px 16px;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 600;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .num-input::placeholder { color: var(--dim); font-size: 15px; font-weight: 400; }
+        .num-input:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px var(--accent2-glow); }
+        .num-input[readonly] {
+            background: rgba(6,182,212,0.06);
+            border-color: rgba(6,182,212,0.2);
+            color: #22d3ee;
+            cursor: default;
+        }
+
+        /* ── SWAP BUTTON ── */
+        .swap-row { display: flex; align-items: center; gap: 16px; margin: 18px 0; }
+        .swap-line { flex: 1; height: 1px; background: var(--border); }
+        .swap-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: var(--muted);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s;
+            flex-shrink: 0;
+        }
+        .swap-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s; }
+        .swap-btn:hover { border-color: var(--accent); color: #a78bfa; background: rgba(124,58,237,0.12); box-shadow: 0 0 16px var(--accent-glow); }
+        .swap-btn:hover svg { transform: rotate(180deg); }
+
+        /* ── CONVERT BUTTON ── */
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 22px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            letter-spacing: 0.3px;
+        }
+        .convert-btn svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+        .convert-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.45); }
+        .convert-btn:active { transform: translateY(0); }
+
+        /* ── RESULT PILL ── */
+        .result-box {
+            margin-top: 24px;
+            background: rgba(6,182,212,0.06);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .result-box.show { opacity: 1; transform: translateY(0); }
+        .result-label { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+        .result-value { font-size: 22px; font-weight: 700; color: #22d3ee; word-break: break-all; }
+        .result-unit { font-size: 13px; color: var(--muted); margin-top: 2px; }
+        .copy-btn {
+            flex-shrink: 0;
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            border: 1px solid rgba(6,182,212,0.25);
+            background: rgba(6,182,212,0.08);
+            color: #22d3ee;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background: rgba(6,182,212,0.18); }
+        .copy-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ── QUICK REFS ── */
+        .quick-refs {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+        .quick-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+        .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .ref-item {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 13px;
+            font-size: 12.5px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .ref-item:hover { border-color: rgba(124,58,237,0.4); color: #c4b5fd; background: rgba(124,58,237,0.08); }
+        .ref-item strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--success);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 999;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: 0 8px 24px rgba(16,185,129,0.35);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ── FOOTER ── */
+        .page-footer { margin-top: 36px; color: var(--dim); font-size: 12.5px; text-align: center; position: relative; z-index: 1; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .converter-card { padding: 24px 18px; }
+            .input-row { flex-direction: column; }
+            .unit-select { flex: none; width: 100%; }
+            .ref-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <div class="header-badge">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Smart Tool
+        </div>
+        <h1>Unit Converter</h1>
+        <p class="header-sub">Instant, accurate conversions across multiple categories</p>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="category-row" id="categoryRow">
+        <button class="cat-btn active" data-cat="length" onclick="setCategory('length', this)">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z" opacity="0"/><path d="M4 20L20 4M4 4h4M4 4v4M20 20h-4M20 20v-4"/></svg>
+            Length
+        </button>
+        <button class="cat-btn" data-cat="weight" onclick="setCategory('weight', this)">
+            <svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M6.5 9h11l1.5 11h-14z"/></svg>
+            Weight
+        </button>
+        <button class="cat-btn" data-cat="temperature" onclick="setCategory('temperature', this)">
+            <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            Temperature
+        </button>
+        <button class="cat-btn" data-cat="area" onclick="setCategory('area', this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            Area
+        </button>
+        <button class="cat-btn" data-cat="speed" onclick="setCategory('speed', this)">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+            Speed
+        </button>
+        <button class="cat-btn" data-cat="volume" onclick="setCategory('volume', this)">
+            <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+            Volume
+        </button>
+    </div>
+
+    <!-- CONVERTER CARD -->
+    <div class="converter-card">
+
+        <!-- FROM -->
+        <div class="input-group">
+            <span class="input-label">From</span>
+            <div class="input-row">
+                <select class="unit-select" id="fromUnit"></select>
+                <input class="num-input" type="number" id="fromValue" placeholder="Enter value…" oninput="liveConvert()">
+            </div>
+        </div>
+
+        <!-- SWAP -->
+        <div class="swap-row">
+            <div class="swap-line"></div>
+            <button class="swap-btn" onclick="swapUnits()" title="Swap units">
+                <svg viewBox="0 0 24 24"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+            </button>
+            <div class="swap-line"></div>
+        </div>
+
+        <!-- TO -->
+        <div class="input-group">
+            <span class="input-label">To</span>
+            <div class="input-row">
+                <select class="unit-select" id="toUnit"></select>
+                <input class="num-input" type="number" id="toValue" placeholder="Result" readonly>
+            </div>
+        </div>
+
+        <!-- CONVERT BUTTON -->
+        <button class="convert-btn" onclick="convert()">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Convert
+        </button>
+
+        <!-- RESULT BOX -->
+        <div class="result-box" id="resultBox">
+            <div>
+                <div class="result-label">Result</div>
+                <div class="result-value" id="resultValue">—</div>
+                <div class="result-unit" id="resultUnit"></div>
+            </div>
+            <button class="copy-btn" onclick="copyResult()" title="Copy result">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+        </div>
+
+        <!-- QUICK REFERENCES -->
+        <div class="quick-refs" id="quickRefs"></div>
+
+    </div>
+
+    <div class="page-footer">Built with precision &mdash; no rounding errors, ever.</div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Copied to clipboard!
+    </div>
+
+<script>
+    const UNITS = {
+        length: {
+            label: 'Length',
+            units: ['Millimeter','Centimeter','Meter','Kilometer','Inch','Foot','Yard','Mile'],
+            toBase: { Millimeter:0.001, Centimeter:0.01, Meter:1, Kilometer:1000, Inch:0.0254, Foot:0.3048, Yard:0.9144, Mile:1609.344 },
+            refs: [
+                { from:'1 Inch', to:'2.54 cm' }, { from:'1 Foot', to:'30.48 cm' },
+                { from:'1 Yard', to:'0.9144 m' }, { from:'1 Mile', to:'1.609 km' },
+                { from:'1 km', to:'0.621 miles' }, { from:'1 m', to:'3.281 ft' }
+            ]
+        },
+        weight: {
+            label: 'Weight / Mass',
+            units: ['Milligram','Gram','Kilogram','Metric Ton','Ounce','Pound','Stone'],
+            toBase: { Milligram:0.000001, Gram:0.001, Kilogram:1, 'Metric Ton':1000, Ounce:0.0283495, Pound:0.453592, Stone:6.35029 },
+            refs: [
+                { from:'1 kg', to:'2.205 lbs' }, { from:'1 lb', to:'453.6 g' },
+                { from:'1 stone', to:'6.35 kg' }, { from:'1 oz', to:'28.35 g' },
+                { from:'1 ton', to:'1000 kg' }, { from:'1 lb', to:'16 oz' }
+            ]
+        },
+        temperature: {
+            label: 'Temperature',
+            units: ['Celsius','Fahrenheit','Kelvin'],
+            toBase: null,
+            refs: [
+                { from:'0°C', to:'32°F / 273.15K' }, { from:'100°C', to:'212°F' },
+                { from:'37°C', to:'98.6°F (Body)' }, { from:'−40°C', to:'−40°F' }
+            ]
+        },
+        area: {
+            label: 'Area',
+            units: ['Square mm','Square cm','Square m','Square km','Square inch','Square foot','Square yard','Acre','Hectare'],
+            toBase: { 'Square mm':0.000001,'Square cm':0.0001,'Square m':1,'Square km':1e6,'Square inch':0.00064516,'Square foot':0.092903,'Square yard':0.836127,'Acre':4046.86,'Hectare':10000 },
+            refs: [
+                { from:'1 acre', to:'4047 m²' }, { from:'1 hectare', to:'10,000 m²' },
+                { from:'1 sq ft', to:'929 cm²' }, { from:'1 sq mile', to:'640 acres' }
+            ]
+        },
+        speed: {
+            label: 'Speed',
+            units: ['m/s','km/h','mph','Knot','ft/s'],
+            toBase: { 'm/s':1,'km/h':0.277778,'mph':0.44704,'Knot':0.514444,'ft/s':0.3048 },
+            refs: [
+                { from:'1 km/h', to:'0.621 mph' }, { from:'1 mph', to:'1.609 km/h' },
+                { from:'1 knot', to:'1.852 km/h' }, { from:'Sound (air)', to:'343 m/s' }
+            ]
+        },
+        volume: {
+            label: 'Volume',
+            units: ['Milliliter','Liter','Cubic meter','Teaspoon','Tablespoon','Cup','Pint','Quart','Gallon (US)','Fluid Ounce'],
+            toBase: { Milliliter:0.001,Liter:1,'Cubic meter':1000,Teaspoon:0.00492892,Tablespoon:0.0147868,Cup:0.236588,Pint:0.473176,Quart:0.946353,'Gallon (US)':3.78541,'Fluid Ounce':0.0295735 },
+            refs: [
+                { from:'1 gallon', to:'3.785 L' }, { from:'1 cup', to:'236.6 ml' },
+                { from:'1 pint', to:'473.2 ml' }, { from:'1 fl oz', to:'29.57 ml' }
+            ]
+        }
+    };
+
+    let currentCat = 'length';
+
+    function populateSelects(cat) {
+        const data = UNITS[cat];
+        const fromEl = document.getElementById('fromUnit');
+        const toEl = document.getElementById('toUnit');
+        fromEl.innerHTML = '';
+        toEl.innerHTML = '';
+        data.units.forEach((u, i) => {
+            fromEl.innerHTML += `<option value="${u}">${u}</option>`;
+            toEl.innerHTML += `<option value="${u}">${u}</option>`;
+        });
+        toEl.selectedIndex = 1;
+        document.getElementById('fromValue').value = '';
+        document.getElementById('toValue').value = '';
+        document.getElementById('resultBox').classList.remove('show');
+        renderRefs(cat);
+    }
+
+    function renderRefs(cat) {
+        const refs = UNITS[cat].refs;
+        const wrap = document.getElementById('quickRefs');
+        if (!refs || refs.length === 0) { wrap.innerHTML = ''; return; }
+        wrap.innerHTML = '<p class="quick-label">Quick Reference</p><div class="ref-grid">' +
+            refs.map(r => `<div class="ref-item" onclick="fillRef(this)"><strong>${r.from}</strong>${r.to}</div>`).join('') +
+            '</div>';
+    }
+
+    function fillRef(el) {
+        const strong = el.querySelector('strong').textContent;
+        const num = parseFloat(strong);
+        if (!isNaN(num)) {
+            document.getElementById('fromValue').value = num;
+            convert();
+        }
+    }
+
+    function setCategory(cat, btn) {
+        currentCat = cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        populateSelects(cat);
+    }
+
+    function doConvert(fromU, toU, val) {
+        if (currentCat === 'temperature') {
+            let celsius;
+            if (fromU === 'Celsius') celsius = val;
+            else if (fromU === 'Fahrenheit') celsius = (val - 32) * 5/9;
+            else celsius = val - 273.15;
+            if (toU === 'Celsius') return celsius;
+            if (toU === 'Fahrenheit') return celsius * 9/5 + 32;
+            return celsius + 273.15;
+        }
+        const tb = UNITS[currentCat].toBase;
+        return val * tb[fromU] / tb[toU];
+    }
+
+    function formatResult(num) {
+        if (isNaN(num)) return '—';
+        if (Math.abs(num) >= 1e9 || (Math.abs(num) < 0.0001 && num !== 0)) return num.toExponential(6);
+        const str = parseFloat(num.toPrecision(10)).toString();
+        return str.length > 14 ? parseFloat(num.toFixed(8)).toString() : str;
+    }
+
+    function convert() {
+        const val = parseFloat(document.getElementById('fromValue').value);
+        const fromU = document.getElementById('fromUnit').value;
+        const toU = document.getElementById('toUnit').value;
+        const box = document.getElementById('resultBox');
+
+        if (isNaN(val)) {
+            box.classList.remove('show');
+            document.getElementById('toValue').value = '';
+            return;
+        }
+
+        const res = doConvert(fromU, toU, val);
+        const formatted = formatResult(res);
+        document.getElementById('toValue').value = formatted;
+        document.getElementById('resultValue').textContent = formatted;
+        document.getElementById('resultUnit').textContent = `${val} ${fromU} = ${formatted} ${toU}`;
+        box.classList.add('show');
+    }
+
+    function liveConvert() { convert(); }
+
+    function swapUnits() {
+        const fromEl = document.getElementById('fromUnit');
+        const toEl = document.getElementById('toUnit');
+        const fromVal = document.getElementById('fromValue').value;
+        const toVal = document.getElementById('toValue').value;
+        const tmp = fromEl.value;
+        fromEl.value = toEl.value;
+        toEl.value = tmp;
+        if (toVal) {
+            document.getElementById('fromValue').value = parseFloat(toVal);
+            convert();
+        }
+    }
+
+    function copyResult() {
+        const val = document.getElementById('resultValue').textContent;
+        if (val && val !== '—') {
+            navigator.clipboard.writeText(val).catch(() => {});
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+    }
+
+    populateSelects('length');
+</script>
+</body>
+</html>

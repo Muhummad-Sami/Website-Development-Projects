@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Development Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .project-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .view-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 My Web Development Projects</h1>
+        <p class="subtitle">Click on any project to view it live</p>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-number">01</div>
+                <h2 class="project-title">Project 1</h2>
+                <p class="project-description"><b>Toyota Website</b><br>
+                    Developed a responsive clone of the Toyota website showcasing vehicles, features, and branding.
+                    Focused on modern UI design, structured layouts, and smooth navigation for a real-world feel.</p>
+                <a href="./Project 1/index.html" class="view-btn">View Project</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">02</div>
+                <h2 class="project-title">Project 2</h2>
+                <p class="project-description"><b>EduMaster Platform</b><br>
+                    Built an educational platform interface to explore courses, learning paths, and resources.
+                    Designed with user-friendly navigation and clean UI to enhance the learning experience.</p>
+                <a href="./Project 2/index.html" class="view-btn">View Project</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">03</div>
+                <h2 class="project-title">Project 3</h2>
+                <p class="project-description"><b>Online Services Website</b><br>
+                    Created a service-based website offering multiple online solutions in one platform.
+                    Implemented organized sections, responsive design, and clear call-to-action elements.</p>
+                <a href="./Project 3/index.html" class="view-btn">View Project</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">04</div>
+                <h2 class="project-title">Project 4</h2>
+                <p class="project-description"><b>EduPath Platform</b><br>
+                    Developed a user-friendly educational platform that allows users to explore courses, structured learning paths, and study resources.</p>
+                <a href="./Project 4/EduPath Website.html" class="view-btn">View Project</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-number">05</div>
+                <h2 class="project-title">Project 5</h2>
+                <p class="project-description"><b>Landing Page Project</b><br>
+                    Designed a modern landing page with attractive layout and conversion-focused sections.Optimized for responsiveness and user engagement with clean design principles.</p>
+                <a href="./Project 5/index.html" class="view-btn">View Project</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
