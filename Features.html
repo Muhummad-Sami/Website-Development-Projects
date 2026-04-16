@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Features | Toyota Pakistan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --red: #eb0a1e;
+            --red-dark: #c4081a;
+            --dark: #1a1a1a;
+            --mid: #333;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+            --white: #fff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.14);
+            --radius: 10px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', Arial, sans-serif; background: var(--light); color: var(--mid); line-height: 1.6; }
+
+        /* ── TOP BAR ── */
+        .top-bar { background: var(--dark); color: #aaa; font-size: 13px; padding: 6px 0; text-align: center; letter-spacing: 0.3px; }
+
+        /* ── HEADER ── */
+        .header { background: var(--white); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .logo-icon { width: 48px; height: 48px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .logo-icon svg { width: 28px; height: 28px; }
+        .logo-text { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; }
+        .logo-text span { display: block; font-size: 11px; font-weight: 400; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px; }
+
+        /* ── NAV ── */
+        .navbar { background: var(--red); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .nav-links { display: flex; list-style: none; align-items: stretch; }
+        .nav-links li a { display: block; padding: 14px 18px; color: rgba(255,255,255,0.92); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.3px; transition: background 0.2s, color 0.2s; }
+        .nav-links li a:hover, .nav-links li a.active { background: rgba(0,0,0,0.15); color: #fff; }
+
+        /* ── PAGE BANNER ── */
+        .page-banner { background: linear-gradient(135deg, #1a1a1a 0%, #2d0007 55%, #1a1a1a 100%); padding: 56px 24px 48px; position: relative; overflow: hidden; }
+        .page-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(235,10,30,0.18) 0%, transparent 70%); }
+        .banner-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--red); }
+        .breadcrumb-sep { color: rgba(255,255,255,0.3); font-size: 12px; }
+        .breadcrumb-current { color: var(--red); font-size: 13px; font-weight: 500; }
+        .banner-title { font-size: clamp(26px, 4vw, 40px); font-weight: 700; color: var(--white); margin-bottom: 10px; line-height: 1.2; }
+        .banner-title em { color: var(--red); font-style: normal; }
+        .banner-sub { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 520px; }
+
+        /* ── CONTAINER ── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── TAB SYSTEM ── */
+        .tab-wrap { padding: 52px 0; }
+        .tab-row { display: flex; justify-content: center; gap: 0; margin-bottom: 48px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; width: fit-content; margin-left: auto; margin-right: auto; box-shadow: var(--shadow-sm); }
+        .tab-btn { padding: 13px 44px; font-size: 15px; font-weight: 600; color: var(--gray); cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.2s; letter-spacing: 0.2px; display: flex; align-items: center; gap: 8px; }
+        .tab-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .tab-btn.active { background: var(--red); color: #fff; }
+        .tab-btn:hover:not(.active) { background: var(--light); color: var(--dark); }
+        .tab-panel { display: none; animation: fadeSlide 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── SECTION HEADER ── */
+        .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+        .section-badge { background: var(--red); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; flex-shrink: 0; }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
+        .section-title { font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+        .section-desc { font-size: 14px; color: var(--gray); }
+
+        /* ── FEATURE GRID ── */
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+        .feature-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.25s ease, box-shadow 0.25s ease; position: relative; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+        .feature-img-wrap { overflow: hidden; position: relative; }
+        .feature-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.18) 100%); pointer-events: none; }
+        .feature-card img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform 0.45s ease; }
+        .feature-card:hover img { transform: scale(1.06); }
+
+        .feature-label { padding: 16px 18px 18px; border-top: 3px solid var(--red); }
+        .feature-num { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+        .feature-name { font-size: 15px; font-weight: 600; color: var(--dark); }
+
+        /* ── DIVIDER ── */
+        .section-divider { height: 1px; background: var(--border); margin: 0; }
+
+        /* ── VALUE STRIP ── */
+        .value-strip { background: var(--dark); color: var(--white); padding: 52px 0; }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .value-item { text-align: center; }
+        .value-icon { width: 56px; height: 56px; background: rgba(235,10,30,0.15); border: 1px solid rgba(235,10,30,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+        .value-icon svg { width: 26px; height: 26px; stroke: var(--red); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .value-item h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .value-item p { font-size: 13.5px; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
+        /* ── FOOTER ── */
+        footer { background: #111; color: #ccc; padding: 56px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #2a2a2a; }
+        .footer-logo { width: 42px; height: 42px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+        .footer-logo svg { width: 24px; height: 24px; }
+        .footer-brand-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .footer-brand p { font-size: 13px; color: #888; line-height: 1.7; margin-top: 10px; }
+        .footer-col h4 { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #2a2a2a; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-col ul li { font-size: 13.5px; color: #888; }
+        .footer-col ul li a { color: #888; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--red); }
+        .contact-item { display: flex; gap: 8px; align-items: flex-start; }
+        .contact-icon { color: var(--red); font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+        .social-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+        .social-btn { width: 36px; height: 36px; border-radius: 8px; background: #1e1e1e; border: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #888; transition: all 0.2s; }
+        .social-btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+        .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        .footer-bottom { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom p { font-size: 12.5px; color: #555; }
+        .footer-bottom a { color: #666; text-decoration: none; }
+        .footer-bottom a:hover { color: var(--red); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .value-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+        }
+        @media (max-width: 680px) {
+            .hamburger { display: flex; }
+            .navbar { display: none; }
+            .navbar.open { display: block; }
+            .nav-links { flex-direction: column; }
+            .nav-links li a { padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .tab-btn { padding: 11px 24px; font-size: 14px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">Toyota Indus Motor Company Ltd. &nbsp;|&nbsp; UAN: +92-111-86-96-82 &nbsp;|&nbsp; Karachi, Pakistan</div>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="toyota-pakistan.html" class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="50" cy="50" rx="46" ry="20" fill="none" stroke="white" stroke-width="8"/>
+                        <ellipse cx="50" cy="50" rx="20" ry="46" fill="none" stroke="white" stroke-width="8"/>
+                    </svg>
+                </div>
+                <div class="logo-text">Toyota Pakistan <span>Indus Motor Company</span></div>
+            </a>
+            <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="about.html" target="_blank">About</a></li>
+                <li><a href="showroom.html" target="_blank">Showroom</a></li>
+                <li><a href="#corporate">Corporate</a></li>
+                <li><a href="Features.html">Features</a></li>
+                <li><a href="contact-us.html" target="_blank">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner">
+        <div class="banner-inner">
+            <div class="breadcrumb">
+                <a href="toyota-pakistan.html">Home</a>
+                <span class="breadcrumb-sep">&#8250;</span>
+                <span class="breadcrumb-current">Car Features</span>
+            </div>
+            <h1 class="banner-title">Interior &amp; <em>Exterior</em> Features</h1>
+            <p class="banner-sub">Explore the craftsmanship and innovation built into every Toyota — inside and out.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="container">
+            <div class="tab-wrap">
+
+                <!-- TAB BUTTONS -->
+                <div class="tab-row">
+                    <button class="tab-btn active" id="btn-interior" onclick="switchTab('interior')">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                        Interior
+                    </button>
+                    <button class="tab-btn" id="btn-exterior" onclick="switchTab('exterior')">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        Exterior
+                    </button>
+                </div>
+
+                <!-- ── INTERIOR PANEL ── -->
+                <div class="tab-panel active" id="panel-interior">
+                    <div class="section-header">
+                        <span class="section-badge">Interior</span>
+                        <div class="section-line"></div>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <p class="section-title">Inside the Cabin</p>
+                        <p class="section-desc">Precision-crafted controls and premium materials designed for driver comfort and confidence.</p>
+                    </div>
+                    <div class="feature-grid" style="margin-top:28px;">
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="In1.jpg" alt="Audio Control">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 01</p>
+                                <p class="feature-name">Audio Control</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="In2.jpg" alt="Optitron Meter & MID Control">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 02</p>
+                                <p class="feature-name">Optitron Meter &amp; MID Control</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="in3.jpg" alt="Push Start">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 03</p>
+                                <p class="feature-name">Push Start</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="In4.jpg" alt="Enter Into Grace">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 04</p>
+                                <p class="feature-name">Enter Into Grace</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="In6.jpg" alt="Gear System">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 05</p>
+                                <p class="feature-name">Gear System</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="In5.jpg" alt="Steering & HD LCD">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Interior &bull; 06</p>
+                                <p class="feature-name">Steering &amp; HD LCD</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ── EXTERIOR PANEL ── -->
+                <div class="tab-panel" id="panel-exterior">
+                    <div class="section-header">
+                        <span class="section-badge">Exterior</span>
+                        <div class="section-line"></div>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <p class="section-title">Outside the Car</p>
+                        <p class="section-desc">Bold styling meets functional engineering — every surface designed with purpose.</p>
+                    </div>
+                    <div class="feature-grid" style="margin-top:28px;">
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex1.jpg" alt="Front Grill & Bumper">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 01</p>
+                                <p class="feature-name">Front Grill &amp; Bumper</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex2.jpg" alt="Rear Bumper">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 02</p>
+                                <p class="feature-name">Rear Bumper</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex3.jpg" alt="Head Light With LED Fog Lamps">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 03</p>
+                                <p class="feature-name">Head Light With LED Fog Lamps</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex4.jpg" alt="Auto Reverse Link Mode">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 04</p>
+                                <p class="feature-name">Auto Reverse Link Mode</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex5.jpg" alt="Auto Reverse Link Mirror">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 05</p>
+                                <p class="feature-name">Auto Reverse Link Mirror</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-img-wrap">
+                                <img src="Ex6.jpg" alt="Smart Trunk Opener">
+                            </div>
+                            <div class="feature-label">
+                                <p class="feature-num">Exterior &bull; 06</p>
+                                <p class="feature-name">Smart Trunk Opener</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- VALUE STRIP -->
+        <div class="section-divider"></div>
+        <section class="value-strip">
+            <div class="container">
+                <div style="text-align:center;margin-bottom:44px;">
+                    <p style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Engineering Excellence</p>
+                    <h2 style="color:#fff;font-size:28px;font-weight:700;">Built to the Highest Standards</h2>
+                </div>
+                <div class="value-grid">
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3>Japanese Quality</h3>
+                        <p>Every component meets Toyota's rigorous global standards before it reaches your hands.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
+                        </div>
+                        <h3>Smart Technology</h3>
+                        <p>Advanced infotainment, driver assist systems, and smart connectivity built for modern life.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                        </div>
+                        <h3>Distinctive Design</h3>
+                        <p>Aerodynamic exteriors and premium interiors crafted to make every journey memorable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="50" cy="50" rx="46" ry="20" fill="none" stroke="white" stroke-width="8"/>
+                            <ellipse cx="50" cy="50" rx="20" ry="46" fill="none" stroke="white" stroke-width="8"/>
+                        </svg>
+                    </div>
+                    <div class="footer-brand-name">Indus Motor Company Ltd.</div>
+                    <p>Plot No. N.W.Z/P-1, Port Qasim Authority,<br>Karachi, Pakistan.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" title="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        <a href="#" class="social-btn" title="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                        <a href="#" class="social-btn" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                        <a href="#" class="social-btn" title="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#111"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html" target="_blank">About Us</a></li>
+                        <li><a href="showroom.html" target="_blank">Showroom</a></li>
+                        <li><a href="contact-us.html" target="_blank">Contact Us</a></li>
+                        <li><a href="privacy.html" target="_blank">Privacy Policy</a></li>
+                        <li><a href="Features.html" target="_blank">Features</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Investors</h4>
+                    <ul>
+                        <li class="contact-item"><span class="contact-icon">&#9993;</span> customer.relations@toyota-indus.com</li>
+                        <li class="contact-item"><span class="contact-icon">&#9742;</span> +92-21-34721100</li>
+                        <li class="contact-item"><span class="contact-icon">&#128222;</span> UAN: +92-111-86-96-82</li>
+                        <li class="contact-item"><span class="contact-icon">&#128251;</span> Fax: (021) 34720056</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Models</h4>
+                    <ul>
+                        <li><a href="showroom.html" target="_blank">Corolla Altis</a></li>
+                        <li><a href="showroom.html" target="_blank">Corolla Cross</a></li>
+                        <li><a href="showroom.html" target="_blank">Yaris</a></li>
+                        <li><a href="showroom.html" target="_blank">Fortuner</a></li>
+                        <li><a href="showroom.html" target="_blank">Hilux Revo</a></li>
+                        <li><a href="showroom.html" target="_blank">Land Cruiser</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2024 Indus Motor Company Ltd. All Rights Reserved. Powered by Echo Digital.</p>
+                <div style="display:flex;gap:18px;">
+                    <a href="toyota-privacy.html" target="_blank">Privacy Policy</a>
+                    <a href="privacy.html">Terms of Use</a>
+                    <a href="privacy.html">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() { document.getElementById('navbar').classList.toggle('open'); }
+
+        function switchTab(name) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('panel-' + name).classList.add('active');
+            document.getElementById('btn-' + name).classList.add('active');
+        }
+    </script>
+</body>
+</html>

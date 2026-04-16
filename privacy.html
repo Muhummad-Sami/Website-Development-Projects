@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Privacy Policy | Toyota Pakistan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --red: #eb0a1e;
+            --red-dark: #c4081a;
+            --dark: #1a1a1a;
+            --mid: #333;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+            --white: #fff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+            --radius: 10px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', Arial, sans-serif; background: var(--light); color: var(--mid); line-height: 1.6; }
+
+        /* TOP BAR */
+        .top-bar { background: var(--dark); color: #aaa; font-size: 13px; padding: 6px 0; text-align: center; }
+
+        /* HEADER */
+        .header { background: var(--white); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 46px; height: 46px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .logo-icon svg { width: 26px; height: 26px; }
+        .logo-text { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.3; }
+        .logo-text span { display: block; font-size: 11px; font-weight: 400; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px; }
+
+        /* NAV */
+        .navbar { background: var(--red); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li a { display: block; padding: 13px 17px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+        .nav-links li a:hover { background: rgba(0,0,0,0.15); color: #fff; }
+
+        /* PAGE BANNER */
+        .page-banner {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d0007 60%, #1a1a1a 100%);
+            color: var(--white); padding: 52px 24px; text-align: center; position: relative; overflow: hidden;
+        }
+        .page-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(235,10,30,0.15) 0%, transparent 70%); }
+        .page-banner-inner { position: relative; z-index: 1; }
+        .breadcrumb { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 12px; display: flex; justify-content: center; gap: 6px; }
+        .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--red); }
+        .breadcrumb .current { color: var(--red); font-weight: 500; }
+        .page-banner h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 700; }
+        .page-banner h1 em { color: var(--red); font-style: normal; }
+        .page-banner p { font-size: 15px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+
+        /* MAIN */
+        .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+        .policy-section { padding: 48px 0 56px; }
+
+        /* POLICY CARD */
+        .policy-card {
+            background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+            box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 20px;
+        }
+        .policy-card-header {
+            padding: 18px 24px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .policy-card-icon {
+            width: 36px; height: 36px; background: rgba(235,10,30,0.08); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .policy-card-icon svg { width: 18px; height: 18px; stroke: var(--red); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .policy-card-title { font-size: 15px; font-weight: 600; color: var(--dark); }
+        .policy-card-body { padding: 24px; }
+
+        /* POLICY LIST */
+        .policy-list { display: flex; flex-direction: column; gap: 0; }
+        .policy-item {
+            display: flex; gap: 16px; padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .policy-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .policy-num {
+            width: 28px; height: 28px; background: var(--red); color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+        }
+        .policy-text { font-size: 14.5px; color: var(--gray); line-height: 1.75; }
+        .policy-text strong { color: var(--dark); font-weight: 600; }
+
+        /* META */
+        .policy-meta { font-size: 13px; color: var(--gray); margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+        .policy-meta span { color: var(--red); font-weight: 500; }
+
+        /* ACCEPT BOX */
+        .accept-box {
+            background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+            box-shadow: var(--shadow-sm); padding: 28px;
+            display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap;
+        }
+        .accept-checkbox-area { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 240px; }
+        .accept-checkbox {
+            width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            flex-shrink: 0; margin-top: 1px; transition: border-color 0.2s, background 0.2s;
+        }
+        .accept-checkbox.checked { background: var(--red); border-color: var(--red); }
+        .accept-checkbox svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.15s; }
+        .accept-checkbox.checked svg { opacity: 1; }
+        .accept-label { font-size: 14px; color: var(--mid); line-height: 1.55; cursor: pointer; }
+        .accept-label a { color: var(--red); text-decoration: none; }
+        .accept-label a:hover { text-decoration: underline; }
+        .accept-btn {
+            padding: 11px 28px; background: var(--red); color: #fff; border: none;
+            border-radius: 7px; font-size: 14px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            opacity: 0.45; pointer-events: none;
+        }
+        .accept-btn.enabled { opacity: 1; pointer-events: auto; }
+        .accept-btn.enabled:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(235,10,30,0.3); }
+        .accepted-msg { display: none; align-items: center; gap: 8px; font-size: 14px; color: #065f46; padding: 11px 18px; background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 7px; }
+        .accepted-msg svg { width: 16px; height: 16px; stroke: #059669; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+        .accepted-msg.show { display: flex; }
+
+        /* FOOTER */
+        footer { background: #111; color: #ccc; padding: 48px 0 0; margin-top: 0; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 36px; border-bottom: 1px solid #2a2a2a; }
+        .footer-logo { width: 40px; height: 40px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+        .footer-logo svg { width: 22px; height: 22px; }
+        .footer-brand-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .footer-brand p { font-size: 13px; color: #777; line-height: 1.7; margin-top: 8px; }
+        .footer-col h4 { font-size: 12px; font-weight: 600; color: #fff; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+        .footer-col ul li a { font-size: 13px; color: #777; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--red); }
+        .footer-col ul li { font-size: 13px; color: #777; }
+        .footer-bottom { padding: 18px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .footer-bottom p { font-size: 12px; color: #444; }
+        .footer-bottom a { color: #555; text-decoration: none; }
+        .footer-bottom a:hover { color: var(--red); }
+        .social-links { display: flex; gap: 8px; margin-top: 14px; }
+        .social-btn { width: 32px; height: 32px; border-radius: 7px; background: #1e1e1e; border: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #777; transition: all 0.2s; }
+        .social-btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+        .social-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .hamburger { display: flex; }
+            .navbar { display: none; }
+            .navbar.open { display: block; }
+            .nav-links { flex-direction: column; }
+            .nav-links li a { padding: 11px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .accept-box { flex-direction: column; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">Toyota Indus Motor Company Ltd. &nbsp;|&nbsp; UAN: +92-111-86-96-82 &nbsp;|&nbsp; Karachi, Pakistan</div>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="50" cy="50" rx="46" ry="20" fill="none" stroke="white" stroke-width="8"/>
+                        <ellipse cx="50" cy="50" rx="20" ry="46" fill="none" stroke="white" stroke-width="8"/>
+                    </svg>
+                </div>
+                <div class="logo-text">Toyota Pakistan <span>Indus Motor Company</span></div>
+            </div>
+            <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="showroom.html">Showroom</a></li>
+                <li><a href="#corporate">Corporate</a></li>
+                <li><a href="Features.html">Features</a></li>
+                <li><a href="contact-us.html">Contact Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <div class="page-banner-inner">
+            <div class="breadcrumb">
+                <a href="#">Home</a>
+                <span>›</span>
+                <span class="current">Privacy Policy</span>
+            </div>
+            <h1><em>Privacy</em> Policy</h1>
+            <p>How Indus Motor Company collects, uses, and protects your information</p>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div class="policy-section">
+
+                <div class="policy-card">
+                    <div class="policy-card-header">
+                        <div class="policy-card-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <span class="policy-card-title">Privacy Policy – Indus Motor Company Ltd.</span>
+                    </div>
+                    <div class="policy-card-body">
+                        <p class="policy-meta">Last updated: <span>January 1, 2024</span> &nbsp;·&nbsp; Effective for all users of Toyota Pakistan's digital platforms and services.</p>
+                        <div class="policy-list">
+                            <div class="policy-item">
+                                <div class="policy-num">1</div>
+                                <p class="policy-text"><strong>Information We Collect:</strong> We collect personal information you provide when contacting us, registering for services, or submitting inquiries — including your name, CNIC, phone number, email address, and vehicle preferences.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">2</div>
+                                <p class="policy-text"><strong>How We Use Your Information:</strong> Your information is used to process inquiries, schedule test drives, provide after-sales support, send service reminders, and improve our products and services.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">3</div>
+                                <p class="policy-text"><strong>Data Sharing:</strong> We do not sell or rent your personal data to third parties. Information may be shared with authorized Toyota dealerships, service centers, and Toyota Motor Corporation solely to fulfill your requests.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">4</div>
+                                <p class="policy-text"><strong>Data Security:</strong> We implement industry-standard security measures to protect your personal data against unauthorized access, disclosure, or misuse. All sensitive data is encrypted during transmission.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">5</div>
+                                <p class="policy-text"><strong>Cookies and Tracking:</strong> Our website uses cookies to enhance your browsing experience, remember your preferences, and analyze site traffic. You may disable cookies through your browser settings, though this may affect certain site features.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">6</div>
+                                <p class="policy-text"><strong>Marketing Communications:</strong> With your consent, we may send promotional messages about new vehicle launches, service offers, and events. You can opt out of marketing communications at any time by contacting us or clicking unsubscribe.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">7</div>
+                                <p class="policy-text"><strong>Retention of Data:</strong> We retain your personal information only as long as necessary to fulfill the purposes described in this policy or as required by applicable Pakistani law, including the Prevention of Electronic Crimes Act (PECA).</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">8</div>
+                                <p class="policy-text"><strong>Your Rights:</strong> You have the right to access, correct, or request deletion of your personal data held by us. To exercise these rights, contact our Customer Relations team at customer.relations@toyota-indus.com.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">9</div>
+                                <p class="policy-text"><strong>Third-Party Links:</strong> Our website may contain links to third-party websites. We are not responsible for the privacy practices of those sites and encourage you to review their privacy policies independently.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">10</div>
+                                <p class="policy-text"><strong>Children's Privacy:</strong> Our services are not directed at individuals under the age of 18. We do not knowingly collect personal data from minors. If you believe a minor has provided us data, please contact us immediately.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">11</div>
+                                <p class="policy-text"><strong>Policy Updates:</strong> Indus Motor Company reserves the right to update this Privacy Policy at any time. Changes will be published on this page with a revised effective date. Continued use of our services constitutes acceptance of the updated policy.</p>
+                            </div>
+                            <div class="policy-item">
+                                <div class="policy-num">12</div>
+                                <p class="policy-text"><strong>Contact &amp; Grievances:</strong> For any questions, concerns, or complaints regarding this Privacy Policy, please contact us at: <strong>customer.relations@toyota-indus.com</strong> or call UAN <strong>+92-111-86-96-82</strong> during business hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCEPT BOX -->
+                <div class="accept-box">
+                    <div class="accept-checkbox-area" onclick="toggleAccept()">
+                        <div class="accept-checkbox" id="acceptBox">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <label class="accept-label">
+                            I have read and agree to the <a href="#">Privacy Policy</a> of Indus Motor Company Ltd. I understand how my personal data will be collected and used.
+                        </label>
+                    </div>
+                    <button class="accept-btn" id="acceptBtn" onclick="handleAccept()">Accept Policy</button>
+                    <div class="accepted-msg" id="acceptedMsg">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Policy accepted. Thank you!
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="50" cy="50" rx="46" ry="20" fill="none" stroke="white" stroke-width="8"/>
+                            <ellipse cx="50" cy="50" rx="20" ry="46" fill="none" stroke="white" stroke-width="8"/>
+                        </svg>
+                    </div>
+                    <div class="footer-brand-name">Indus Motor Company Ltd.</div>
+                    <p>Plot No. N.W.Z/P-1, Port Qasim Authority,<br>Karachi, Pakistan.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" title="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        <a href="#" class="social-btn" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                        <a href="#" class="social-btn" title="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                        <a href="#" class="social-btn" title="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#111"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="showroom.html">Showroom</a></li>
+                        <li><a href="Features.html">Features</a></li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="privacy.html">Terms of Use</a></li>
+                        <li><a href="privacy.html">Cookie Policy</a></li>
+                        <li><a href="showroom.html">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>+92-21-34721100</li>
+                        <li>UAN: +92-111-86-96-82</li>
+                        <li>customer.relations@toyota-indus.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2024 Indus Motor Company Ltd. All Rights Reserved. Powered by Echo Digital.</p>
+                <div style="display:flex; gap:16px;">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="privacy.html">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            document.getElementById('navbar').classList.toggle('open');
+        }
+
+        let accepted = false;
+        function toggleAccept() {
+            if (accepted) return;
+            const box = document.getElementById('acceptBox');
+            const btn = document.getElementById('acceptBtn');
+            box.classList.toggle('checked');
+            btn.classList.toggle('enabled', box.classList.contains('checked'));
+        }
+
+        function handleAccept() {
+            accepted = true;
+            document.getElementById('acceptBox').classList.add('checked');
+            document.getElementById('acceptBtn').style.display = 'none';
+            document.getElementById('acceptedMsg').classList.add('show');
+        }
+    </script>
+</body>
+</html>
