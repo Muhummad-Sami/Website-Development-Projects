@@ -3,261 +3,724 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>E-Commerce Website</title>
-
+  <title>Skinresting · E-Commerce</title>
   <link rel="shortcut icon" href="icon.jpg" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #faf7f5;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: #1e1e1e;
+      letter-spacing: 1px;
+    }
 
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+      padding: 8px 0;
+    }
+    .navbar-brand img {
+      width: 38px;
+      height: 38px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    .navbar-brand span {
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #1e1e1e;
+      font-size: 1.1rem;
+    }
+    .navbar-toggler {
+      border: none;
+      padding: 4px 8px;
+    }
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+    .offcanvas-header {
+      border-bottom: 1px solid #eee;
+    }
+    .offcanvas-title {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 900;
+    }
+    .nav-link {
+      font-weight: 500;
+      padding: 10px 16px !important;
+      transition: 0.2s;
+    }
+    .nav-link:hover {
+      color: #9e6868 !important;
+    }
+
+    /* ===== HERO SECTION - FULLY RESPONSIVE ===== */
+    .hero-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background: #f5ede8;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 100px 5% 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .hero-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.8rem, 12vw, 6rem);
+      font-weight: 900;
+      color: #1a1a1a;
+      line-height: 1.05;
+      text-shadow: 0 2px 30px rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+      max-width: 800px;
+    }
+    .hero-text {
+      max-width: 580px;
+      font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 18px 24px;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-buttons .btn {
+      border-radius: 40px;
+      padding: 12px 36px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: #1e1e1e;
+      border: none;
+      transition: 0.3s;
+      font-size: clamp(0.85rem, 1vw, 1rem);
+    }
+    .hero-buttons .btn:hover {
+      background: #9e6868;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+    .hero-buttons .btn-outline {
+      background: transparent;
+      border: 2px solid #1e1e1e;
+      color: #1e1e1e;
+    }
+    .hero-buttons .btn-outline:hover {
+      background: #1e1e1e;
+      color: #fff;
+      border-color: #1e1e1e;
+    }
+
+    /* ===== SCROLL BAR ===== */
+    .line {
+      width: 100%;
+      margin: 0;
+      border: 1px solid #1e1e1e;
+      opacity: 0.12;
+    }
+    .scroll-wrapper {
+      overflow: hidden;
+      width: 100%;
+      background: #fff;
+      padding: 10px 0;
+    }
+    .scroll-text {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: clamp(16px, 3.5vw, 28px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: scroll 20s linear infinite;
+      color: #1e1e1e;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== ADD TO CART SECTION ===== */
+    .order-section {
+      background: rgb(235, 190, 205);
+      padding: 60px 5%;
+      width: 100%;
+    }
+    .cart-box {
+      background: rgb(57, 48, 48);
+      color: #fff;
+      padding: 30px 28px;
+      border-radius: 16px;
+      transition: 0.3s;
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cart-box:hover {
+      transform: translateY(-5px);
+      background: #7a5555;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    .cart-box h3 {
+      font-weight: 700;
+      font-size: clamp(1.3rem, 2vw, 1.8rem);
+      margin-bottom: 12px;
+    }
+    .cart-box p {
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      line-height: 1.6;
+      opacity: 0.9;
+      flex: 1;
+    }
+    .cart-box .dropdown {
+      margin-top: 16px;
+    }
+    .cart-box .btn-add {
+      border-radius: 30px;
+      padding: 10px 30px;
+      font-weight: 600;
+      background: #1e1e1e;
+      border: none;
+      transition: 0.3s;
+      margin-top: 16px;
+      align-self: flex-start;
+    }
+    .cart-box .btn-add:hover {
+      background: #9e6868;
+    }
+    .cart-image {
+      background: rgb(57, 48, 48);
+      border-radius: 16px;
+      overflow: hidden;
+      height: 100%;
+      min-height: 300px;
+      transition: 0.3s;
+    }
+    .cart-image:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    .cart-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 300px;
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-section {
+      background-image: url('Products.png');
+      background-size: cover;
+      background-position: center;
+      padding: 100px 5% 60px;
+      width: 100%;
+    }
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      max-width: 1200px;
+      margin: -80px auto 0;
+      flex-wrap: wrap;
+    }
+    .feature-card {
+      background: #fff;
+      padding: 28px 24px;
+      flex: 1;
+      min-width: 240px;
+      max-width: 380px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+      transition: 0.3s;
+      border: none;
+    }
+    .feature-card:hover {
+      background: #e8c6c6;
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.08);
+    }
+    .feature-card h2 {
+      font-size: clamp(1.3rem, 2vw, 1.7rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: #000;
+    }
+    .feature-card p {
+      font-size: clamp(0.85rem, 1vw, 0.95rem);
+      line-height: 1.6;
+      color: #333;
+    }
+
+    /* ===== REVIEWS ===== */
+    .reviews-section {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 5%;
+    }
+    .review-item {
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      border: 2px solid #e8e0dc;
+      border-radius: 12px;
+      transition: 0.3s;
+      background: #fff;
+    }
+    .review-item:hover {
+      background: #f5ece8;
+      transform: translateY(-3px);
+      border-color: #9e6868;
+    }
+    .review-item h4 {
+      font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+      font-weight: 700;
+      color: #1e1e1e;
+    }
+    .review-item p {
+      font-size: clamp(0.8rem, 1vw, 0.92rem);
+      line-height: 1.6;
+      color: #3d3d3d;
+      margin-bottom: 0;
+    }
+
+    /* ===== PRODUCTS ===== */
+    .products-section {
+      display: flex;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 30px auto 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 5% 40px;
+    }
+    .product-card {
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px;
+      background: rgb(57, 48, 48);
+      color: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      transition: 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      background: #7a5555;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    .product-card img:hover {
+      transform: scale(1.02);
+    }
+    .product-card .price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0 14px;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1vw, 1rem);
+    }
+    .product-card .price span:last-child {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 14px;
+      border-radius: 30px;
+    }
+    .product-card .btn-add {
+      border-radius: 30px;
+      padding: 10px;
+      font-weight: 600;
+      background: #1e1e1e;
+      border: none;
+      transition: 0.3s;
+      width: 100%;
+    }
+    .product-card .btn-add:hover {
+      background: #9e6868;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-section {
+      margin: 60px auto 80px;
+      padding: 0 5%;
+      max-width: 1200px;
+    }
+    .contact-info {
+      background: rgb(57, 48, 48);
+      padding: 40px 36px !important;
+      border-radius: 16px 0 0 16px;
+    }
+    .contact-info h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+    }
+    .contact-form {
+      background: #fff;
+      padding: 40px 36px !important;
+      border-radius: 0 16px 16px 0;
+    }
+    .contact-form .form-control {
+      border: 1px solid #eee;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #f9f7f5;
+      transition: 0.3s;
+    }
+    .contact-form .form-control:focus {
+      border-color: #9e6868;
+      box-shadow: 0 0 0 4px rgba(158, 104, 104, 0.1);
+      background: #fff;
+    }
+    .btn-contact {
+      background: #1e1e1e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      border: none;
+      border-radius: 40px;
+      padding: 14px;
+      transition: 0.3s;
+    }
+    .btn-contact:hover {
+      background: #9e6868;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(158, 104, 104, 0.25);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #1e1e1e;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE FIXES ===== */
+    @media (max-width: 992px) {
+      .hero-overlay { padding: 80px 4% 40px; min-height: 90vh; }
+      .order-section { padding: 40px 4%; }
+      .cart-box, .cart-image { min-height: 240px; }
+      .cart-image img { min-height: 240px; }
+      .feature-section { padding: 60px 4% 40px; }
+      .card-container { margin-top: 0; }
+      .contact-info { border-radius: 16px 16px 0 0 !important; }
+      .contact-form { border-radius: 0 0 16px 16px !important; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-wrapper { min-height: 100vh; }
+      .hero-overlay { padding: 100px 4% 30px; min-height: 100vh; }
+      .hero-title { font-size: clamp(2rem, 10vw, 3.2rem); }
+      .hero-text { 
+        font-size: 0.8rem; 
+        padding: 12px 16px; 
+        max-width: 100%;
+        backdrop-filter: blur(6px);
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .hero-buttons .btn { padding: 10px 24px; font-size: 0.8rem; }
+      
+      .order-section { padding: 30px 4%; }
+      .cart-box, .cart-image { min-height: 200px; }
+      .cart-image img { min-height: 200px; }
+      .cart-box { padding: 20px; }
+      
+      .feature-card { min-width: 100%; max-width: 100%; }
+      .card-container { flex-direction: column; align-items: center; }
+      
+      .product-card { min-width: 160px; max-width: 260px; }
+      .product-card img { height: 180px; }
+      
+      .contact-info, .contact-form { padding: 30px 20px !important; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-overlay { padding: 80px 3% 20px; min-height: 100vh; }
+      .hero-title { font-size: 1.8rem; }
+      .hero-text { font-size: 0.7rem; padding: 10px 12px; }
+      .hero-buttons .btn { padding: 8px 18px; font-size: 0.7rem; }
+      .hero-buttons { gap: 0.6rem; }
+      
+      .order-section { padding: 20px 3%; }
+      .cart-box, .cart-image { min-height: 160px; }
+      .cart-image img { min-height: 160px; }
+      .cart-box { padding: 16px; }
+      .cart-box h3 { font-size: 1.1rem; }
+      
+      .product-card { min-width: 140px; max-width: 100%; }
+      .product-card img { height: 150px; }
+      
+      .review-item { padding: 12px 14px; }
+      .review-item h4 { font-size: 1rem; }
+    }
+  </style>
+</head>
 <body>
 
-<!-- IMAGE SECTION -->
-<div id="Home" class="image-box" >
-
-  <!-- NAVBAR -->
-  <nav class="navbar bg-body-tertiary ">
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      
       <a class="navbar-brand" href="#">
         <img src="icon.jpg" alt="SKINRESTING">
         <span>SKINRESTING</span>
       </a>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">SKINRESTING</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
-
         <div class="offcanvas-body">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ms-auto">
             <li><a class="nav-link active" href="#Home">Home</a></li>
             <li><a class="nav-link" href="#AddToCart">Add To Cart</a></li>
             <li><a class="nav-link" href="#Ingredients">Ingredients</a></li>
-            <li><a class="nav-link" href="#CustomerReviews">Customer Reviews</a></li>
-            <li><a class="nav-link" href="#Recommendations">Recommendations</a></li>
+            <li><a class="nav-link" href="#CustomerReviews">Reviews</a></li>
+            <li><a class="nav-link" href="#Recommendations">Products</a></li>
             <li><a class="nav-link" href="#Contact">Contact</a></li>
-            
           </ul>
-
-          <form class="d-flex mt-3">
+          <form class="d-flex mt-3 mt-lg-0">
             <input class="form-control me-2" type="search" placeholder="Search">
             <button class="btn btn-outline-success">Search</button>
           </form>
         </div>
       </div>
-
     </div>
   </nav>
 
-  <!-- HERO -->
-  <div class="col-12 col-md-12"><img src="Bg.png" alt="bg image"></div>
+  <!-- ===== HERO ===== -->
+  <section id="Home" class="hero-wrapper">
+    <img src="Bg.png" alt="Skinresting background" class="hero-bg">
+    <div class="hero-overlay">
+      <h1 class="hero-title">SKINRESTING</h1>
+      <p class="hero-text">
+        Keep your skin looking youthful and refreshed with Skinresting's Rejuvenation Cream—the most advanced moisturizer on the market. It deeply hydrates your skin and helps reduce fine lines for a smoother look. Enriched with natural ingredients.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-dark">Buy Now</button>
+        <button class="btn btn-outline">Learn More</button>
+      </div>
+    </div>
+  </section>
 
-  <div class="text">SKINRESTING</div>
-
-  <p class="Header-text col-6">
-    Keep your skin looking youthful and refreshed<br>
-    with Skinresting’s Rejuvenation Cream—the most advanced moisturizer on the market.<br>
-    It deeply hydrates your skin and helps reduce fine lines for a smoother look.<br>
-    Enriched with natural ingredients.
-  </p>
-
-  <div class="btn-group">
-    <button class="btn btn-dark">Buy Now</button>
-    <button class="btn btn-dark">Learn More</button>
+  <!-- ===== SCROLL BAR ===== -->
+  <hr class="line">
+  <div class="scroll-wrapper">
+    <div class="scroll-text">
+      LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
+      LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
+      LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
+      LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
+      LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
+      LET YOUR SKIN RECOVER
+    </div>
   </div>
-
   <hr class="line">
 
-    <div class="scroll-wrapper">
-     <div class="scroll-text">
-    LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
-    LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
-    LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
-    LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
-    LET YOUR SKIN RECOVER &nbsp;&nbsp;&nbsp;
-    LET YOUR SKIN RECOVER
-     </div>
-    </div>
-
-  <hr class="line">
-</div>
-
-<!-- SECOND SECTION -->
-<div class="order">
-  
-  <div id="AddToCart" class="container">
-    <h2 class="text-center mb-5" style="font-family: 'Bodoni Moda'; font-size: 3rem;">ADD TO CART</h2>
-
-    <div class="row">
-
-      <div class="cart ">
-        <h3>Rejuvenation Cream</h3>
-        <span>Skinteresting’s award-winning Rejuvenation Cream combines humectants, emollients, and occlusives to enhance skin hydration and barrier function.</span>
-        
-        <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-                Choose Size
-            </button>
-
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#Recommendations">Deep Purifying Mask</a></li>
-                <li><a class="dropdown-item" href="#Recommendations">Rejuvenating Eye Cream</a></li>
-                <li><a class="dropdown-item" href="#Recommendations">Hydrating Serum </a></li>
-            </ul>
-        </div>
-
-        <button class="btn btn-dark add-cart-btn">Add to Cart</button>
-        </div>
-
-      <div class="cart2 ">
-        <img src="Cream.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-      </div>
-
-    </div>
-  </div>
-</div>
-<!--Cards-->
-
-<section class="feature-section">
-  <div id="Ingredients" class="card-container">
-    
-    <div class="card">
-      <h2>The Science Behind the Beauty</h2>
-      <p>Key ingredients like hyaluronic acid and glycerin draw moisture into the skin, reducing transepidermal water loss and promoting a plump, youthful appearance.</p>
-    </div>
-
-    <div class="card">
-      <h2>Peptide Perfect Formulation</h2>
-      <p>Enriched with antioxidants and peptides, Rejuvenation Cream repairs damage, boosts collagen, and protects against environmental stressors.</p>
-    </div>
-
-    <div class="card">
-      <h2>Clinically Confirmed Quality</h2>
-      <p>Clinical studies show improved moisture retention and skin elasticity with regular use, making Rejuvenation Cream essential to your routine.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- Reviews -->
-<div id="CustomerReviews" class="container1">
-    <h2 class="text-center mb-5" style="font-family: 'Bodoni Moda'; font-size: 3rem;">What Our Customers Say</h2>
- 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="Image">
-        <img src="Faces.png" alt="" style="width: 100%; height: 452px; object-fit: cover;">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card1">
-        <div class="card-body1">
-         <div class="review">
-        <h4>A game-changer for my skin!</h4>
-        <p>I've been using Skinresting Rejuvenation Cream for a month, and my skin has never looked better! The hydration lasts all day, and I've noticed a huge improvement in my skin's elasticity. Plus, it feels so lightweight and smooth—I'm officially obsessed!</p>
-        </div>
-
-        <div class="review">
-        <h4>Goodbye dry patches!</h4>
-        <p>This cream works wonders on my dry, flaky skin. Skinresting Rejuvenation Cream has transformed my complexion, leaving it soft, radiant, and perfectly moisturized. It's become my go-to daily skincare product, and I can’t imagine my routine without it.</p>
-        </div>
-
-        <div class="review">
-        <h4>Like a spa treatment in a jar!</h4>
-        <p>Skinresting Rejuvenation Cream makes my skin feel like it's had a mini facial every time I use it! It’s super moisturizing without being greasy, and I’ve noticed fewer fine lines and a lovely, dewy glow. This cream is my new skincare holy grail!    </p>
-        </div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-</div>
-
-<!-- Products Section -->
- <h2 class="text-center mb-5" style="font-family: 'Bodoni Moda'; font-size: 3rem;">RECOMMENDED PRODUCTS</h2>
-<!-- Products Section -->
-<section id="Recommendations" class="products">
-    <div class="col-md-3">
-        <img src="Facewash.png" alt="Gentle Facewash">
-        <div class="price">
-           <span>Deep Purifying Mask</span> 
-           <span>$29.99</span>
-        </div>
-        <button class="btn btn-dark add-cart-btn">Add to Cart</button>
-    </div>
-
-    <div class="col-md-3">
-        <img src="Eye Cream 2.png" alt="Rejuvenating Eye Cream">
-        <div class="price">
-           <span>Rejuvenating Eye Cream</span> 
-           <span>$34.99</span>
-        </div>
-        <button class="btn btn-dark add-cart-btn">Add to Cart</button>
-    </div>
-
-    <div class="col-md-3">
-        <img src="Serum.png" alt="Hydrating Serum">
-        <div class="price">
-           <span>Hydrating Serum</span> 
-           <span>$39.99</span>
-        </div>
-        <button class="btn btn-dark add-cart-btn">Add to Cart</button>
-    </div>
-</section>
-
-<!-- Contact Section -->
-<section id="Contact" class="contact-section container">
-    <div class="row g-0 shadow-lg rounded overflow-hidden">
-        <div class="col-md-5 contact-info d-flex flex-column justify-content-center p-5 text-white">
-            <h2 class="display-5 mb-4" style="font-family: 'Bodoni Moda';">Connect With Your Skin</h2>
-            <p>Have questions about your routine? Our experts are here to help you find your glow.</p>
-            <div class="mt-4">
-                <p><strong>Email:</strong> hello@skinresting.com</p>
-                <p><strong>Visit:</strong> 123 Wellness Way, NY</p>
+  <!-- ===== ADD TO CART ===== -->
+  <section id="AddToCart" class="order-section">
+    <div class="container">
+      <h2 class="text-center mb-5 section-title">ADD TO CART</h2>
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-6">
+          <div class="cart-box">
+            <div>
+              <h3>Rejuvenation Cream</h3>
+              <p>Skintesting's award-winning Rejuvenation Cream combines humectants, emollients, and occlusives to enhance skin hydration and barrier function.</p>
             </div>
+            <div>
+              <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">Choose Size</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#Recommendations">Deep Purifying Mask</a></li>
+                  <li><a class="dropdown-item" href="#Recommendations">Rejuvenating Eye Cream</a></li>
+                  <li><a class="dropdown-item" href="#Recommendations">Hydrating Serum</a></li>
+                </ul>
+              </div>
+              <button class="btn btn-dark btn-add">Add to Cart</button>
+            </div>
+          </div>
         </div>
-
-        <div class="col-md-7 bg-white p-5">
-            <form>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">First Name</label>
-                        <input type="text" class="form-control" placeholder="Jane">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Last Name</label>
-                        <input type="text" class="form-control" placeholder="Doe">
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" placeholder="name@example.com">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Your Message</label>
-                    <textarea class="form-control" rows="4" placeholder="Tell us how we can help..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-dark w-100 py-3 mt-2 btn-contact">Send Message</button>
-            </form>
+        <div class="col-lg-6">
+          <div class="cart-image">
+            <img src="Cream.png" alt="Rejuvenation Cream">
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- Footer   -->
-<footer class="bg-dark text-white text-center py-4">
+  <!-- ===== FEATURE CARDS ===== -->
+  <section id="Ingredients" class="feature-section">
+    <div class="card-container">
+      <div class="feature-card">
+        <h2>The Science Behind the Beauty</h2>
+        <p>Key ingredients like hyaluronic acid and glycerin draw moisture into the skin, reducing transepidermal water loss and promoting a plump, youthful appearance.</p>
+      </div>
+      <div class="feature-card">
+        <h2>Peptide Perfect Formulation</h2>
+        <p>Enriched with antioxidants and peptides, Rejuvenation Cream repairs damage, boosts collagen, and protects against environmental stressors.</p>
+      </div>
+      <div class="feature-card">
+        <h2>Clinically Confirmed Quality</h2>
+        <p>Clinical studies show improved moisture retention and skin elasticity with regular use, making Rejuvenation Cream essential to your routine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS ===== -->
+  <section id="CustomerReviews" class="reviews-section">
+    <h2 class="text-center mb-5 section-title">What Our Customers Say</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <img src="Faces.png" alt="Happy customers" class="img-fluid rounded" style="width:100%; height:400px; object-fit:cover;">
+      </div>
+      <div class="col-md-6">
+        <div class="review-item">
+          <h4>A game-changer for my skin!</h4>
+          <p>I've been using Skinresting Rejuvenation Cream for a month, and my skin has never looked better! The hydration lasts all day, and I've noticed a huge improvement in my skin's elasticity.</p>
+        </div>
+        <div class="review-item">
+          <h4>Goodbye dry patches!</h4>
+          <p>This cream works wonders on my dry, flaky skin. Skinresting Rejuvenation Cream has transformed my complexion, leaving it soft, radiant, and perfectly moisturized.</p>
+        </div>
+        <div class="review-item">
+          <h4>Like a spa treatment in a jar!</h4>
+          <p>Skinresting Rejuvenation Cream makes my skin feel like it's had a mini facial every time I use it! It's super moisturizing without being greasy, and I've noticed fewer fine lines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECOMMENDED PRODUCTS ===== -->
+  <h2 class="text-center section-title" style="padding:0 5%;">RECOMMENDED PRODUCTS</h2>
+  <section id="Recommendations" class="products-section">
+    <div class="product-card">
+      <img src="Facewash.png" alt="Deep Purifying Mask">
+      <div class="price">
+        <span>Deep Purifying Mask</span>
+        <span>$29.99</span>
+      </div>
+      <button class="btn btn-dark btn-add">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="Eye Cream 2.png" alt="Rejuvenating Eye Cream">
+      <div class="price">
+        <span>Rejuvenating Eye Cream</span>
+        <span>$34.99</span>
+      </div>
+      <button class="btn btn-dark btn-add">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="Serum.png" alt="Hydrating Serum">
+      <div class="price">
+        <span>Hydrating Serum</span>
+        <span>$39.99</span>
+      </div>
+      <button class="btn btn-dark btn-add">Add to Cart</button>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="Contact" class="contact-section">
+    <div class="row g-0 shadow-lg rounded overflow-hidden">
+      <div class="col-md-5 contact-info d-flex flex-column justify-content-center text-white">
+        <h2 class="display-5 mb-4">Connect With Your Skin</h2>
+        <p>Have questions about your routine? Our experts are here to help you find your glow.</p>
+        <div class="mt-4">
+          <p><strong>Email:</strong> hello@skinresting.com</p>
+          <p><strong>Visit:</strong> 123 Wellness Way, NY</p>
+        </div>
+      </div>
+      <div class="col-md-7 contact-form">
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" placeholder="Jane">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" placeholder="Doe">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Your Message</label>
+            <textarea class="form-control" rows="4" placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-dark btn-contact w-100">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
     <p class="mb-0">&copy; 2024 Skinresting. All rights reserved.</p>
-</footer>
+  </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
